@@ -17,6 +17,7 @@ public class EconomyManager {
 	
 	
 	public void onFrame(Player self) {
+		checkCommandCenters();
 		assignUnclaimedCommandCenters();
 		assignUnclaimedWorkers();
 		// Run command centers
@@ -70,6 +71,7 @@ public class EconomyManager {
 		return claimedCommandCenters;
 	}
 	
+	// Gets all workers that are currently claimed by command centers
 	List<Unit> getClaimedWorkerUnits() {
 		List<Unit> claimedWorkers = new ArrayList<Unit>();
 		for (TerranCommandCenterManager manager : commandCenterManagers) {
@@ -78,5 +80,15 @@ public class EconomyManager {
 		return claimedWorkers;
 	}
 	
+	// Removes dead command centers from the list
+	void checkCommandCenters() {
+		List<TerranCommandCenterManager> removeList = new ArrayList<TerranCommandCenterManager>();
+		for (TerranCommandCenterManager commandCenterManager : commandCenterManagers) {
+			if (!commandCenterManager.getCommandCenter().exists()) {
+				removeList.add(commandCenterManager);
+			}
+		}
+		commandCenterManagers.removeAll(removeList);
+	}
 	
 }

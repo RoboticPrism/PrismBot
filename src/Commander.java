@@ -1,3 +1,4 @@
+import base_management.BuildManager;
 import base_management.EconomyManager;
 import bwapi.*;
 import bwta.BWTA;
@@ -11,6 +12,7 @@ public class Commander extends DefaultBWListener {
     private Player self;
     
     private EconomyManager economyManager;
+    private BuildManager buildManager;
 
     public void run() {
         mirror.getModule().setEventListener(this);
@@ -58,6 +60,11 @@ public class Commander extends DefaultBWListener {
         
         for (Unit myUnit : self.getUnits()) {
         	units.append(myUnit.getType()).append(" ").append(myUnit.getTilePosition()).append("\n");
+        	game.drawLineMap(myUnit.getPosition().getX(), 
+        					 myUnit.getPosition().getY(), 
+        					 myUnit.getOrderTargetPosition().getX(),
+        					 myUnit.getOrderTargetPosition().getY(), 
+        					 bwapi.Color.Yellow);
         }
 
         //draw my units on screen

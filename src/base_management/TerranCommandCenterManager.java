@@ -13,11 +13,13 @@ public class TerranCommandCenterManager {
 	private List<Unit> myWorkers = new ArrayList<Unit>();
 	private List<Unit> myMineralPatches = new ArrayList<Unit>();
 	private List<Unit> myVespeneGeysers = new ArrayList<Unit>();
+	private BuildManager buildManager;
 	
 	public TerranCommandCenterManager(Game game, Player self, Unit commandCenter){
 		this.game = game;
 		this.self = self;
 		this.commandCenter = commandCenter;
+		this.buildManager = new BuildManager(game, self, commandCenter.getInitialTilePosition());
 		// Add all nearby mineral patches to this base
 		for(Unit mineralPatch : game.getStaticMinerals()){
 			if (mineralPatch.getPoint().getDistance(commandCenter.getPoint()) < 300) {
@@ -30,6 +32,7 @@ public class TerranCommandCenterManager {
 		buildWorkers();
 		checkWorkers();
 		managerIdleWorkers();
+		buildManager.onFrame();
 	}
 	
 	// Get the command center attached to this object
@@ -51,7 +54,13 @@ public class TerranCommandCenterManager {
 	
 	// Checks through the worker list to remove dead workers from the list
 	void checkWorkers(){
-		
+		List<Unit> removeList = new ArrayList<Unit>();
+		for (Unit unit : myWorkers){
+			if (!unit.exists()){
+				removeList.add(unit);
+			}
+		}
+		myWorkers.removeAll(removeList);
 	}
 	
 	// Tries to build workers if we need more and can afford more
