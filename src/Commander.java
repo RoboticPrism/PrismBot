@@ -60,11 +60,6 @@ public class Commander extends DefaultBWListener {
         
         for (Unit myUnit : self.getUnits()) {
         	units.append(myUnit.getType()).append(" ").append(myUnit.getTilePosition()).append("\n");
-        	game.drawLineMap(myUnit.getPosition().getX(), 
-        					 myUnit.getPosition().getY(), 
-        					 myUnit.getOrderTargetPosition().getX(),
-        					 myUnit.getOrderTargetPosition().getY(), 
-        					 bwapi.Color.Yellow);
         }
 
         //draw my units on screen

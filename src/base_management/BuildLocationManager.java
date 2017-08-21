@@ -10,8 +10,8 @@ class BuildLocationManager {
     private Player self;
     private TilePosition commandCenterLocation;
     
-    private int baseWidthTiles = 20;
-    private int baseHeightTiles = 20;
+    private int baseWidthTiles = 10;
+    private int baseHeightTiles = 10;
     
     public BuildLocationManager(Game game, Player self, TilePosition commandCenterLocation) {
     	this.game = game;

@@ -3,44 +3,53 @@ import bwapi.*;
 import bwta.BWTA;
 import bwta.BaseLocation;
 import java.util.*;
+import wrappers.Scv;
 
 // Represents an order to build a specific unit at a specific location
 public class BuildOrder{
+	private Game game;
 	private UnitType buildType;
 	private TilePosition buildLocation;
-	private Unit buildUnit;
-	private Unit builder;
+	private Scv builder;
 	
-	public BuildOrder(UnitType buildType, TilePosition buildLocation){
+	public BuildOrder(Game game, UnitType buildType, TilePosition buildLocation){
+		this.game = game;
 		this.buildType = buildType;
 		this.buildLocation = buildLocation;
 	}
 	
 	// Set the worker that is building this building
-	public void setBuilder(Unit builder){
+	public void setBuilder(Scv builder){
 		this.builder = builder;
 	}
 	
 	// Get this builder if it is still alive
-	public Unit getBuilder() {
-		if (builder.exists()){
-			return builder;
+	public Scv getBuilder() {
+		return builder;
+	}
+	
+	public Unit getBuildUnit() {
+		if (builder != null) {
+			return builder.getUnit().getBuildUnit();
 		} else {
 			return null;
 		}
 	}
 	
-	// Set the associated unit once building has begun
-	public void setBuildUnit(Unit buildUnit){
-		this.buildUnit = buildUnit;
+	public UnitType getBuildType() {
+		return buildType;
+	}
+	
+	public TilePosition getBuildLocation() {
+		return buildLocation;
 	}
 	
 	// Check if the building is finished
-	public boolean isBuildDone(){
-		if (buildUnit == null){
+	public boolean isBuildDone() {
+		if (getBuildUnit() == null){
 			return false;
 		} else {
-			return buildUnit.getRemainingBuildTime() == 0;
+			return getBuildUnit().getRemainingBuildTime() == 0;
 		}
 	}
 	
